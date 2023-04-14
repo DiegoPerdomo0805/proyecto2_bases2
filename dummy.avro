@@ -1,0 +1,46 @@
+{
+    "type": "record",
+    "name": "User",
+    "namespace": "com.example",
+    "fields": [
+        {
+            "name": "rowkey",
+            "type": "int"
+        },
+        {
+            "name":"columnfamily1",
+            "type": {
+                "type": "record",
+                "name": "columnfamily1",
+                "fields": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "age",
+                        "type": "int"
+                    }
+                ]
+            }
+        },
+        {
+            "name":"columnfamily2",
+            "type": {
+                "type": "record",
+                "name": "columnfamily2",
+                "fields": [
+                    {
+                        "name": "address",
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone",
+                        "type": "string"
+                    }
+                ]
+            }
+        }
+    ]
+
+}
