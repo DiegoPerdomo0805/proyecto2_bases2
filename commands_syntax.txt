@@ -1,23 +1,22 @@
  funciones ddl: create, list, disable, enable, is_enabled, alter, drop, drop all, describe
 
-create my_table columnfamilyname
+create my_table columnfamilyname -
 
+list -
 
-list
+disable my_table -
 
-disable my_table
+enable my_table -
 
-enable my_table
-
-is_enabled my_table
+is_enabled my_table -
 
 alter my_table rename columnfamilyname newcolumnfamilyname
 
 alter my_table drop columnfamilyname
 
-drop my_table
+drop my_table -
 
-drop all
+drop all -
 
 describe my_table
 
@@ -27,18 +26,16 @@ describe my_table
 
 # put can add or update a row
 
-put my_table rowkey columnfamilyname columnname value
+put my_table rowkey columnfamilyname columnname value -
 
-get my_table rowkey
+get my_table rowkey - 
 
 scan my_table
 
-scan my_table start key1 end key2
+delete my_table rowkey columnfamilyname columnname -
 
-delete my_table rowkey columnfamilyname columnname
+deleteall my_table rowkey - 
 
-deleteall my_table rowkey
-
-count my_table
+count my_table - 
 
 truncate my_table
