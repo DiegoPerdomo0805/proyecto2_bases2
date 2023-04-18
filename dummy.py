@@ -34,8 +34,8 @@ with open('./tables/alfa.avro', 'rb') as f:
 
 print('\ncampos')"""
 
-dropTable('dummy')
-create_table('dummy', ['a','b'])
+"""dropTable('dummy')
+create_table('dummy', ['a','b'])"""
 
 name = 'dummy'
 
@@ -46,7 +46,7 @@ with open(path, 'rb') as f:
     schema = reader.writer_schema
     print(schema)
 
-print()
+"""print()
 from connection import putTable
 
 print(putTable(name, 1, 'b', 'name', 'John Smith'))
@@ -96,7 +96,7 @@ for e in schema['fields']:
     print(e['name'])
 
 
-from connection import *
+from connection import *"""
 
 #print(alterAdd(name, 'a', 'savages'))
 

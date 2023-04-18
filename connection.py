@@ -231,6 +231,42 @@ def alterDrop(table, cf):
         return "Column Family "+ cf +" deleted"
     else:
         return "Table is disabled"
+    
+
+
+
+
+
+def describeTable(table):
+    path = './tables/'+table+'.avro'
+    with open(path, 'rb') as f:
+        reader = fastavro.reader(f)
+        reader2 = avro.datafile.DataFileReader(f, avro.io.DatumReader())
+        schema = reader.writer_schema
+        schema_dict = schema
+        nombre = schema_dict['name']
+        activa = schema_dict['enable']
+        cfs = []
+        for e in schema_dict['fields']:
+            if e['name'] != 'rowkey':
+                info = {}
+                info['name'] = e['name']
+                #info['type'] = e['type']['name']
+                info['columns'] = []
+                for f in e['type']['fields']:
+                    temp = ''
+                    temp = ' columna: ' + f['name'] + ' tipo: ' + f['type']
+                    info['columns'].append(temp)
+                cfs.append(info)
+        
+        registros = []
+        for record in reader2:
+            registros.append(record)
+        return nombre, activa, cfs, registros
+
+        
+
+        
 
 
 # ////////////////////////////////////////// DML //////////////////////////////////////////
@@ -486,7 +522,13 @@ def is_int(s):
 import ast
 
 def is_bool(s):
-    if s == 'True' or s == 'False':
+    if s == 'true' or s == 'false':
+        return True
+    else:
+        return False
+    
+def what_bool(s):
+    if s == 'true':
         return True
     else:
         return False
@@ -499,7 +541,7 @@ def TypeOf(value):
     elif is_double(value):
         return 'double', float(value)
     elif is_bool(value):
-        return 'boolean', ast.literal_eval(value)
+        return 'boolean', what_bool(value)
     else:
         return 'string', value
     

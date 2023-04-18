@@ -22,10 +22,19 @@ cmds = [
     'delete',
     'delete_all',
     'count',
-    'truncate'
+    'truncate',
 ]
 
 running = True
+
+
+def help():
+
+    print('\nComandos disponibles y sus sintáxis:')
+    with open('./extra/commands_syntax.txt', 'r') as f:
+        for e in f:
+            print(e, end='')
+    print('\n')
 
 
 while running:
@@ -36,6 +45,8 @@ while running:
     cmd = cmd.split(' ')
     if cmd[0] == 'exit':
         running = False
+    elif cmd[0] == 'help':
+        help()
     elif cmd[0] in cmds:
         r = command(cmd)
     else:

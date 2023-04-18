@@ -176,7 +176,18 @@ class command:
             if check_table(self.args[0]):
                 # verificar si la tabla esta habilitada
                 # mostrar el schema
-                print('Tabla')
+                nombre, activa, cfs, registros = describeTable(self.args[0])
+                print('Nombre de la tabla: ', nombre)
+                estado = 'Habilitada' if activa else 'Deshabilitada'
+                print('Estado de la tabla: ', estado)
+                print('Familias de columnas: ')
+                for e in cfs:
+                    print('\t', e)
+                print('Número de registros: ', len(registros))
+                print('Registros: ')
+                for e in registros:
+                    print('\t', e)
+
             else:
                 print('Error: la tabla no existe')
 
