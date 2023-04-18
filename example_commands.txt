@@ -1,0 +1,24 @@
+put movies 1 actor name "Tom Cruise"
+put movies 1 actor age 59
+put movies 1 actor gender "Male"
+put movies 1 director name "Steven Spielberg"
+put movies 1 director age 75
+put movies 1 director gender "Male"
+put movies 2 actor name "Emma Watson"
+put movies 2 actor age 31
+put movies 2 actor gender "Female"
+put movies 2 director name "Christopher Nolan"
+put movies 2 director age 51
+put movies 2 director gender "Male"
+put movies 3 actor name "Robert Downey Jr."
+put movies 3 actor age 56
+put movies 3 actor gender "Male"
+put movies 3 director name "Martin Scorsese"
+put movies 3 director age 79
+put movies 3 director gender "Male"
+put movies 4 actor name "Scarlett Johansson"
+put movies 4 actor age 37
+put movies 4 actor gender "Female"
+put movies 4 director name "Taika Waititi"
+put movies 4 director age 46
+put movies 4 director gender "Male"

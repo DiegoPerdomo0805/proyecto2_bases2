@@ -124,23 +124,15 @@ class command:
         elif len(self.args) > 4:
             print('Error: Sólo se requieren 3 o 4 argumentos')
         else:
-            if check_table(self.args[0]):
-                # verificar si la tabla esta habilitada
-                # verificar si la familia de columnas existe
-                # verificar si la familia de columnas esta habilitada
+            if check_table(self.args[0]):                
                 if self.args[1] == 'rename' or  self.args[1] == 'drop':
                     #print('Familia de columnas modificada')
                     action = self.args[1]
                     if action == 'rename' and len(self.args) == 4:
-                        # renombrar la familia de columnas
-                        # modificar el schema
-                        # modificar el archivo
-                        print('Familia de columnas renombrada')
+                        print(alterAdd(self.args[0], self.args[2], self.args[3]))
+                        
                     elif action == 'drop' and len(self.args) == 3:
-                        # eliminar la familia de columnas
-                        # modificar el schema
-                        # modificar el archivo
-                        print('Familia de columnas eliminada')
+                        print(alterDrop(self.args[0], self.args[2]))
                     else:
                         print('Error: el comando no existe o argumentos incorrectos')
                 else:
@@ -243,7 +235,22 @@ class command:
         else:
             if check_table(self.args[0]):
                 # verificar si la tabla esta habilitada
-                print('Valores obtenidos')
+                #print(scanTable(self.args[0]))
+                r = scanTable(self.args[0])
+                if r != "Table does not exist":
+                    
+                    for e in r:
+                        #print(e)
+                        for f in e:
+                            if f == 'rowkey':
+                                print(f , ': ' , e[f])
+                            else:
+                                print(' - ',f)
+                                for g in e[f]:
+                                    print('  - ',g , ': ' , e[f][g])
+                    #    print(e , ': ' , r[e])
+                else:
+                    print(r)
             else:
                 print('Error: la tabla no existe')
 

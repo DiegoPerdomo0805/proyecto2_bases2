@@ -10,7 +10,7 @@ enable my_table -
 
 is_enabled my_table -
 
-alter my_table rename columnfamilyname newcolumnfamilyname
+alter my_table rename columnfamilyname newcolumnfamilyname -
 
 alter my_table drop columnfamilyname
 
@@ -38,4 +38,4 @@ deleteall my_table rowkey -
 
 count my_table - 
 
-truncate my_table
+truncate my_table -

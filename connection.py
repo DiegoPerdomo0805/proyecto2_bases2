@@ -143,6 +143,96 @@ def isEnabled(table):
 
 
 
+def alterAdd(table, old, new):
+    path = './tables/'+table+'.avro'
+    if isEnabled(table):
+        with open(path, 'rb') as f:
+            reader = fastavro.reader(f)
+            schema = reader.writer_schema
+            schema_dict = schema
+
+            cf_exists = False
+
+            for e in schema_dict['fields']:
+                if e['name'] == old:
+                    cf_exists = True
+                    break
+
+            if not cf_exists:
+                return "Column Family {"+ old +"} does not exist"
+
+
+            for e in schema_dict['fields']:
+                if e['name'] == old:
+                    #e1['type']
+                    e['type']['name'] = new
+                    e['name'] = new
+                    break
+            record = avro.datafile.DataFileReader(f, avro.io.DatumReader())
+            rs = []
+            for e in record:
+                rs.append(e)
+            #print(' * ',rs)
+            #print(' * ',schema_dict)
+
+            for e in rs:
+                for j in e:
+                    if j == old:
+                        #print(' $$ ',e[old])
+                        e[new] = e[old]
+                        e.pop(old, None)
+                        break
+
+            #print(' * ',rs)
+        with open(path, "wb") as avro_file:
+            fastavro.writer(avro_file, schema, rs)
+        return "Column Family {"+ old +"} renamed to {"+ new + "}"
+    else:
+        return "Table is disabled"
+    
+
+def alterDrop(table, cf):
+    path = './tables/'+table+'.avro'
+    if isEnabled(table):
+        with open(path, 'rb') as f:
+            reader = fastavro.reader(f)
+            schema = reader.writer_schema
+            schema_dict = schema
+
+            cf_exists = False
+            for e in schema_dict['fields']:
+                if e['name'] == cf:
+                    cf_exists = True
+                    break
+
+            if not cf_exists:
+                return "Column Family {"+ cf +"} does not exist"
+
+
+            for e in schema_dict['fields']:
+                if e['name'] == cf:
+                    schema_dict['fields'].remove(e)
+                    break
+            record = avro.datafile.DataFileReader(f, avro.io.DatumReader())
+            rs = []
+            for e in record:
+                rs.append(e)
+            for e in rs:
+                for j in e:
+                    if j == cf:
+                        e.pop(cf, None)
+                        break
+            
+            #print(' * ',rs)
+            #print(' * ',schema_dict)
+
+        with open(path, "wb") as avro_file:
+            fastavro.writer(avro_file, schema, rs)
+        return "Column Family "+ cf +" deleted"
+    else:
+        return "Table is disabled"
+
+
 # ////////////////////////////////////////// DML //////////////////////////////////////////
 
 def putTable(table, rowkey, cf, column, data):
@@ -359,6 +449,22 @@ def truncateTable(table):
         print('Table created successfully')
     else:
         print("Table is disabled")
+
+
+def scanTable(table):
+    path = './tables/'+table+'.avro'
+    if isEnabled(table):
+        with open(path, 'rb') as f:
+            reader = fastavro.reader(f)
+            reader2 = avro.datafile.DataFileReader(f, avro.io.DatumReader())
+            schema = reader.writer_schema
+            schema_dict = schema
+            registros = []
+            for e in reader2:
+                registros.append(e)
+            return registros
+    else:
+        return "Table is disabled"
 
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

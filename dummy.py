@@ -10,11 +10,11 @@ print(fastavro.__version__)
 
 """path = './tables/alfa.avro'
 
-c_families = ['beta','gamma']
+c_families = ['beta','gamma']"""
 
 from connection import create_table, dropTable
 
-dropTable('alfa')
+"""dropTable('alfa')
 
 create_table('alfa', c_families)
 
@@ -23,7 +23,7 @@ create_table('alfa', c_families)
 
 #create_table('alfa', c_families)
 
-
+"""
 print('\n\n\n\n - Alfa')
 
 with open('./tables/alfa.avro', 'rb') as f:
@@ -32,12 +32,73 @@ with open('./tables/alfa.avro', 'rb') as f:
     print(schema)
     print(type(schema))
 
-print('\ncampos')
+print('\ncampos')"""
+
+dropTable('dummy')
+create_table('dummy', ['a','b'])
+
+name = 'dummy'
+
+path = './tables/'+name+'.avro'
+
+with open(path, 'rb') as f:
+    reader = fastavro.reader(f)
+    schema = reader.writer_schema
+    print(schema)
+
+print()
+from connection import putTable
+
+print(putTable(name, 1, 'b', 'name', 'John Smith'))
+print(putTable(name, 1, 'a', 'movie', 'Halloween'))
+
+reg = []
+with open(path, 'rb') as f:
+    record = avro.datafile.DataFileReader(f, avro.io.DatumReader())
+    for e in record:
+        reg.append(e)
+
+
+print(reg)
+print()
+
+old = 'a'
+new = 'z'
+
+
+
+from connection import alterAdd, alterDrop
+#print(schema['fields'])
+for e in schema['fields']:
+    print(e['name'])
+
+print(alterAdd(name, old, new))
+
+print()
+
+print(alterDrop(name, old))
+
+print()
+
+print(alterDrop(name, new))
+
+print()
+
+with open(path, 'rb') as f:
+    reader = fastavro.reader(f)
+    schema = reader.writer_schema
+    print(schema)
+
+print()
 
 
 for e in schema['fields']:
-    if e['name'] != 'rowkey':
-        print(e['name'])
+    print(e['name'])
+
+
+from connection import *
+
+#print(alterAdd(name, 'a', 'savages'))
 
 
 """
@@ -84,7 +145,7 @@ print(record)"""
 
 #with open('./tables/alfa.avro', 'wb') as f:
 #    fastavro.writer(f, schema, [record])
-
+"""
 print('\n\n\n\n--------------------------------------------------\n\n\n\n')
 
 
@@ -99,7 +160,7 @@ with open("./tables/alfa.avro", "rb") as avro_file:
 
 
 
-from connection import putTable
+from connection import putTable"""
 
 #print(putTable('alfa', 1, 'beta', 'name', 'John Smith'))
 """
@@ -231,3 +292,4 @@ else:
 ##         print(' - ',record['cf1'],'\n')
 ##         print(' - ',record['cf1']['name'],'\n')
 ##     reader.close()
+

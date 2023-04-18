@@ -29,7 +29,7 @@ running = True
 
 
 while running:
-    cmd = input('\nfastavro> ')
+    cmd = input('\nNEKR0N> ')
     cmd = cmd.lower()
     cmd = cmd.strip()
     # convertir a lista separando por espacios
